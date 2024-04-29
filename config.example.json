@@ -1,4 +1,6 @@
 {
     "keyPath": "",
-    "certPath": ""
+    "certPath": "",
+    "https": false,
+    "port": 8080
 }

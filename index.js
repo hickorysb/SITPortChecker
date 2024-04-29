@@ -1,17 +1,24 @@
 const express = require("express");
+const app = express();
 const fetch = require("fetch");
-const https = require("https");
 const fs = require("fs");
 const zlib = require("zlib");
 const { Telnet } = require("telnet-client");
 const config = JSON.parse(fs.readFileSync("config.json"));
-const credentials = {
-  key: fs.readFileSync(config.keyPath),
-  cert: fs.readFileSync(config.certPath),
-};
-const app = express();
-const port = 8443;
-const httpsServer = https.createServer(credentials, app);
+let httpsServer;
+let httpServer;
+if (config.https) {
+    const https = require("https");
+    const credentials = {
+    key: fs.readFileSync(config.keyPath),
+    cert: fs.readFileSync(config.certPath),
+    };
+    httpsServer = https.createServer(credentials, app);
+}
+else {
+    const http = require("http");
+    httpServer = http.createServer(app);
+}
 
 app.use(express.json());
 
@@ -109,4 +116,8 @@ app.post("/checkports", async (req, res) => {
   );
 });
 
-httpsServer.listen(port, "127.0.0.1");
+if(config.https) {
+    httpsServer.listen(config.port, "127.0.0.1");
+} else {
+    httpServer.listen(config.port, "127.0.0.1");
+}
