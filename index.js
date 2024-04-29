@@ -18,6 +18,9 @@ app.get('/ip', (req, res) => {
 
 app.post('/checkports', async (req, res) => {
     var ip = req.headers['x-forwarded-for'] || req.ip
+    var octets = ip.toString().split(".");
+    if(octets.length != 4) res.send(JSON.stringify({error: "INVALID IP"}));
+    if (ip.toString() == "127.0.0.1" || ip.toString().startsWith("192.168") || ip.toString().startsWith("10.") || (octets[0] == "172" && parseInt(octets[1]) >= 16 && parseInt(octets[1]) <= 31)) res.send(JSON.stringify({error: "RECEIVED PRIVATE SPACE ADDRESS"}));
     const connection = new Telnet()
     fetch.fetchUrl('http://' + ip.toString() + ":" + (req.body.akiPort || 6969) + "/launcher/ping", {
         disableDecoding: true,
