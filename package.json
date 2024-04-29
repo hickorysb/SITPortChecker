@@ -1,0 +1,27 @@
+{
+  "name": "sitportchecker",
+  "version": "1.0.0",
+  "description": "Checks for open ports on the incoming IP address based on ports listed in the body",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hickorysb/SITPortChecker.git"
+  },
+  "keywords": [
+    "SIT",
+    "Tarkov",
+    "PortCheck"
+  ],
+  "author": "HickorySB",
+  "license": "NCSA",
+  "bugs": {
+    "url": "https://github.com/hickorysb/SITPortChecker/issues"
+  },
+  "homepage": "https://github.com/hickorysb/SITPortChecker#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
